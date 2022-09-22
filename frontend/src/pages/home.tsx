@@ -16,7 +16,17 @@ export default function Home() {
       <div className="card w-96 bg-discord-darker shadow-xl mx-auto mt-52">
         <div className="card-body">
           <h2 className="card-title">Who should we mock today?</h2>
-          <p>Type in the victim's Discord ID</p>
+
+          <div className="flex flex-row">
+            Type in the victim's Discord ID
+            <a
+              href="https://www.youtube.com/watch?v=ZPROrf4Fe3Q"
+              className="text-xs ml-2"
+            >
+              the what?
+            </a>
+          </div>
+
           <input
             id="idInput"
             type="text"
