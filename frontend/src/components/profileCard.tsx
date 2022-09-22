@@ -54,7 +54,12 @@ export default class ProfileCard extends React.Component<IProfileProps> {
           <Brilliance />
         </div>
         <div className="z-10 absolute bottom-4 mx-4 h-[184px] card bg-discord-darker w-[90.7%] rounded-xl">
-          <div className="absolute top-2 left-3 flex flex-row">
+          <div
+            className={
+              (this.props.status == "" ? "top-4" : "top-2") +
+              " absolute left-3 flex flex-row"
+            }
+          >
             <div className="font-extrabold text-white text-lg">
               {this.props.username}
             </div>
