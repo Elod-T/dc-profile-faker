@@ -76,7 +76,6 @@ export default class InputCard extends React.Component<
     nextState: Readonly<IInputCardState>
   ) {
     if (nextProps.avatar !== nextState.avatar) {
-      console.log("next", nextState.accent);
       return {
         username: nextProps.username,
         discriminator: nextProps.discriminator,
@@ -108,6 +107,21 @@ export default class InputCard extends React.Component<
         this.setState({ avatar_url: reader.result as string });
       };
     }
+  };
+
+  createUrl = () => {
+    let url = "http://localhost:5173/profile?id=custom";
+    for (const [key, value] of Object.entries(this.state)) {
+      if (
+        key !== "card" &&
+        key !== "full" &&
+        key !== "list" &&
+        key !== "colorChangerPopup"
+      ) {
+        url += `&${key}=${value}`;
+      }
+    }
+    return url;
   };
 
   changerInput = (title: string) => {
@@ -267,6 +281,21 @@ export default class InputCard extends React.Component<
             <label htmlFor="my-modal" className="cursor-pointer btn w-[49%]">
               reset
             </label>
+          </div>
+
+          <div className="mx-auto">
+            <button
+              id="copy"
+              onClick={() => {
+                navigator.clipboard.writeText(this.createUrl());
+                document.getElementById("copy")!.innerHTML = "Copied!";
+                setTimeout(() => {
+                  document.getElementById("copy")!.innerHTML = "Copy link";
+                }, 3000);
+              }}
+            >
+              Copy link
+            </button>
           </div>
         </div>
         {this.modalBox()}
