@@ -60,7 +60,7 @@ class ProfilePage extends React.Component<
   componentDidMount(): void {
     axios({
       method: "post",
-      url: "https://dcfakerbackend.gooblin.gq/getuser",
+      url: "http://localhost:3000/getuser",
       headers: {
         "Content-Type": "application/json",
       },
@@ -68,20 +68,22 @@ class ProfilePage extends React.Component<
         id: this.props.id,
       },
     }).then((response) => {
-      this.setColor(response.data.avatar);
+      const avatar_url = `https://cdn.discordapp.com/avatars/${this.props.id}/${response.data.avatar}.webp?size=512`;
+
+      this.setColor(avatar_url);
 
       this.setState(() => ({
         username: response.data.username,
         discriminator: response.data.discriminator,
         avatar: response.data.avatar,
-        avatar_url: `https://cdn.discordapp.com/avatars/${this.props.id}/${response.data.avatar}.webp?size=512`,
+        avatar_url: avatar_url,
       }));
     });
   }
 
   setColor = (avatar: string) => {
     fac
-      .getColorAsync(this.state.avatar_url)
+      .getColorAsync(avatar)
       .then((color) => {
         this.setState(() => ({
           accent: color.hex,
