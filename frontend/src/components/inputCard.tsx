@@ -110,7 +110,7 @@ export default class InputCard extends React.Component<
   };
 
   createUrl = () => {
-    let url = "http://localhost:5173/profile?id=custom";
+    let url = "https://dcfaker.netlify.app/profile?id=custom";
     for (const [key, value] of Object.entries(this.state)) {
       if (
         key !== "card" &&
