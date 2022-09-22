@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use((request, response, next) => {
   response.setHeader(
     "Access-Control-Allow-Origin",
-    "https://dcfaker.netlify.app/"
+    "https://dcfaker.netlify.app"
   );
   response.setHeader(
     "Access-Control-Allow-Headers",
