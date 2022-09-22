@@ -12,6 +12,7 @@ const fac = new FastAverageColor();
 
 interface IProfilePageProps {
   id: string;
+  searchParams: URLSearchParams;
 }
 
 interface IProfilePageState {
@@ -38,16 +39,18 @@ class ProfilePage extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      username: "",
-      discriminator: "",
-      avatar: "",
-      avatar_url: "",
-      accent: "",
-      status: "",
-      about_me: "About me",
-      bio: "Bio",
-      note: "Note",
-      click_to_add_a_note: "Click to add a note",
+      username: this.props.searchParams.get("username") || "",
+      discriminator: this.props.searchParams.get("discriminator") || "",
+      avatar: this.props.searchParams.get("avatar") || "",
+      avatar_url: this.props.searchParams.get("avatar_url") || "",
+      accent: this.props.searchParams.get("accent") || "",
+      status: this.props.searchParams.get("status") || "",
+      about_me: this.props.searchParams.get("about_me") || "About me",
+      bio: this.props.searchParams.get("bio") || "Bio",
+      note: this.props.searchParams.get("note") || "Note",
+      click_to_add_a_note:
+        this.props.searchParams.get("click_to_add_a_note") ||
+        "Click to add a note",
       card: React.createRef(),
       full: React.createRef(),
       list: React.createRef(),
@@ -58,9 +61,17 @@ class ProfilePage extends React.Component<
   }
 
   componentDidMount(): void {
+    if (this.state.avatar_url && this.state.accent == "") {
+      this.setColor(this.state.avatar_url);
+    }
+
+    if (this.props.id == "0") {
+      return;
+    }
+
     axios({
       method: "post",
-      url: "https://dcfakerbackend.gooblin.gq/getuser",
+      url: "http://localhost:3000/getuser",
       headers: {
         "Content-Type": "application/json",
       },
@@ -73,8 +84,14 @@ class ProfilePage extends React.Component<
       this.setColor(avatar_url);
 
       this.setState(() => ({
-        username: response.data.username,
-        discriminator: response.data.discriminator,
+        username:
+          this.state.username == ""
+            ? response.data.username
+            : this.state.username,
+        discriminator:
+          this.state.discriminator == ""
+            ? response.data.discriminator
+            : this.state.discriminator,
         avatar: response.data.avatar,
         avatar_url: avatar_url,
       }));
@@ -103,7 +120,7 @@ class ProfilePage extends React.Component<
 
     return (
       <div>
-        <div className="mx-20 relative w-4/5 bg-green-100">
+        <div className="mx-auto relative w-[1400px]">
           <div
             ref={this.state.card}
             id="card"
@@ -148,9 +165,18 @@ class ProfilePage extends React.Component<
 export default function Profile() {
   const [searchParams] = useSearchParams();
 
+  if (searchParams.get("id") == "custom") {
+    return <ProfilePage id="0" searchParams={searchParams} />;
+  }
+
   if (isNaN(Number(searchParams.get("id")))) {
     return <Navigate to="/" replace={true} />;
   }
 
-  return <ProfilePage id={searchParams.get("id") as string} />;
+  return (
+    <ProfilePage
+      id={searchParams.get("id") as string}
+      searchParams={searchParams}
+    />
+  );
 }
