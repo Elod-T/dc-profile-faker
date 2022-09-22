@@ -60,7 +60,7 @@ class ProfilePage extends React.Component<
   componentDidMount(): void {
     axios({
       method: "post",
-      url: "http://localhost:3000/getuser",
+      url: "http://152.70.185.148:3000/getuser",
       headers: {
         "Content-Type": "application/json",
       },
