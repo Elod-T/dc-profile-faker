@@ -70,7 +70,7 @@ class ProfilePage extends React.Component<
 
     axios({
       method: "post",
-      url: "https://dcfaker.netlify.app/getuser",
+      url: "https://dcfakerbackend.gooblin.gq/getuser",
       headers: {
         "Content-Type": "application/json",
       },
