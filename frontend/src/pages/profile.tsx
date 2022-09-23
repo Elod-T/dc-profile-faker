@@ -70,7 +70,7 @@ class ProfilePage extends React.Component<
 
     axios({
       method: "post",
-      url: "https://dcfakerbackend.gooblin.gq/getuser",
+      url: "http://localhost:3000/getuser",
       headers: {
         "Content-Type": "application/json",
       },
