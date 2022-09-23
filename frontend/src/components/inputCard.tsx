@@ -112,13 +112,8 @@ export default class InputCard extends React.Component<
   createUrl = () => {
     let url = "https://dcfaker.netlify.app/profile?id=custom";
     for (const [key, value] of Object.entries(this.state)) {
-      if (
-        key !== "card" &&
-        key !== "full" &&
-        key !== "list" &&
-        key !== "colorChangerPopup"
-      ) {
-        url += `&${key}=${value}`;
+      if (typeof value === "string") {
+        url += `&${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
       }
     }
     return url;
@@ -229,7 +224,7 @@ export default class InputCard extends React.Component<
             <div
               className={
                 (this.state.colorChangerPopup ? "" : "invisible") +
-                " z-10 absolute bottom-[190px] left-2"
+                " z-10 absolute top-[300px] left-2"
               }
             >
               <HexColorPicker
@@ -288,9 +283,10 @@ export default class InputCard extends React.Component<
               id="copy"
               onClick={() => {
                 navigator.clipboard.writeText(this.createUrl());
-                document.getElementById("copy")!.innerHTML = "Copied!";
+                const copy = document.getElementById("copy");
+                copy!.innerHTML = "Copied!";
                 setTimeout(() => {
-                  document.getElementById("copy")!.innerHTML = "Copy link";
+                  copy!.innerHTML = "Copy link";
                 }, 3000);
               }}
             >
