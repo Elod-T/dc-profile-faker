@@ -38,9 +38,6 @@ class ProfilePage extends React.Component<
 > {
   constructor(props: any) {
     super(props);
-    this.props.searchParams.forEach((value, key) => {
-      console.log(key, value);
-    });
     this.state = {
       username: this.props.searchParams.get("username") || "",
       discriminator: this.props.searchParams.get("discriminator") || "",
@@ -73,7 +70,7 @@ class ProfilePage extends React.Component<
 
     axios({
       method: "post",
-      url: "http://localhost:3000/getuser",
+      url: "https://dcfaker.netlify.app/getuser",
       headers: {
         "Content-Type": "application/json",
       },
