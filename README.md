@@ -1,1 +1,3 @@
-# Create Fake Discord Profile Statuses!
+# Fake Discord Profiles, Statuses
+
+### Live site: https://dcfaker.ml/
