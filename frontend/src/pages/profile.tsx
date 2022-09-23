@@ -38,6 +38,9 @@ class ProfilePage extends React.Component<
 > {
   constructor(props: any) {
     super(props);
+    this.props.searchParams.forEach((value, key) => {
+      console.log(key, value);
+    });
     this.state = {
       username: this.props.searchParams.get("username") || "",
       discriminator: this.props.searchParams.get("discriminator") || "",
@@ -61,17 +64,16 @@ class ProfilePage extends React.Component<
   }
 
   componentDidMount(): void {
-    if (this.state.avatar_url && this.state.accent == "") {
-      this.setColor(this.state.avatar_url);
-    }
-
-    if (this.props.id == "0") {
+    if (this.props.id == "custom") {
+      if (this.state.avatar_url && this.state.avatar == "") {
+        this.setColor(this.state.avatar_url);
+      }
       return;
     }
 
     axios({
       method: "post",
-      url: "https://dcfakerbackend.gooblin.gq/getuser",
+      url: "http://localhost:3000/getuser",
       headers: {
         "Content-Type": "application/json",
       },
@@ -112,7 +114,7 @@ class ProfilePage extends React.Component<
   };
 
   render() {
-    if (this.state.accent == "") {
+    if (this.state.accent == "" && this.props.id != "custom") {
       return (
         <progress className="progress w-1/2 absolute top-1/2 right-1/2 transform translate-x-1/2"></progress>
       );
@@ -121,20 +123,16 @@ class ProfilePage extends React.Component<
     return (
       <div>
         <div className="mx-auto relative w-[1400px]">
-          <div
-            ref={this.state.card}
-            id="card"
-            className="absolute left-20 top-5"
-          >
-            <ProfileCard id={this.props.id} {...this.state} />
+          <div className="absolute left-20 top-5">
+            <div ref={this.state.card} id="card">
+              <ProfileCard id={this.props.id} {...this.state} />
+            </div>
           </div>
 
-          <div
-            ref={this.state.full}
-            id="full"
-            className="absolute left-20 top-[360px]"
-          >
-            <ProfileFull id={this.props.id} {...this.state} />
+          <div className="absolute left-20 top-[360px]">
+            <div ref={this.state.full} id="full">
+              <ProfileFull id={this.props.id} {...this.state} />
+            </div>
           </div>
 
           <div className="absolute right-32 top-16">
@@ -147,13 +145,12 @@ class ProfilePage extends React.Component<
           </div>
         </div>
 
-        <div
-          ref={this.state.list}
-          id="list"
-          className="absolute top-40 right-0 z-10"
-        >
-          <ProfileInList id={this.props.id} {...this.state} />
+        <div className="absolute top-40 right-0 z-10">
+          <div ref={this.state.list} id="list">
+            <ProfileInList id={this.props.id} {...this.state} />
+          </div>
         </div>
+
         <div className="absolute top-0 right-0">
           <ProfileListColumn id={this.props.id} count={23} {...this.state} />
         </div>
@@ -165,11 +162,10 @@ class ProfilePage extends React.Component<
 export default function Profile() {
   const [searchParams] = useSearchParams();
 
-  if (searchParams.get("id") == "custom") {
-    return <ProfilePage id="0" searchParams={searchParams} />;
-  }
-
-  if (isNaN(Number(searchParams.get("id")))) {
+  if (
+    isNaN(Number(searchParams.get("id"))) &&
+    searchParams.get("id") != "custom"
+  ) {
     return <Navigate to="/" replace={true} />;
   }
 
