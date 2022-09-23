@@ -11,10 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((request, response, next) => {
-  response.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://dcfaker.netlify.app"
-  );
+  response.setHeader("Access-Control-Allow-Origin", "*");
   response.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
