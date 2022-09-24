@@ -5,7 +5,6 @@ services:
     container_name: frontend
     build: ./frontend
     restart: always
-    network_mode: host
     depends_on:
       - backend
 
@@ -13,4 +12,3 @@ services:
     container_name: backend
     build: ./backend
     restart: always
-    network_mode: host
