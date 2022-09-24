@@ -11,7 +11,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((request, response, next) => {
-  response.setHeader("Access-Control-Allow-Origin", "https://dcfaker.ml");
+  response.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://dcfaker.guestvendeg.hu"
+  );
   response.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
