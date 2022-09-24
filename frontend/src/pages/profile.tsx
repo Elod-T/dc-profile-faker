@@ -70,7 +70,7 @@ class ProfilePage extends React.Component<
 
     axios({
       method: "post",
-      url: "https://backend.dcfaker.ml/getuser",
+      url: "http://127.0.0.1:3000/getuser",
       headers: {
         "Content-Type": "application/json",
       },
