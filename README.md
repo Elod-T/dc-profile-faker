@@ -1,3 +1,3 @@
 # Fake Discord Profiles, Statuses
 
-### Live site: https://dcfaker.ml/
+### Live site: https://dcfaker.guestvendeg.hu/
